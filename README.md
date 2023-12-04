@@ -57,11 +57,16 @@ This would calculate the tile dimensions for a 1920x1080 video at 24 fps, with a
 
 ## Compilation
 
-To build the tool, you will need to have the Zig programming language installed. Simply run the following command to build the executable:
+To build the tool, you will need to have the Zig programming language installed.
+
+1. Run the following command to build the executable:
 ```
-zig build-exe av1-tile-calc.zig
+zig build
 ```
-This will generate an executable file called `av1-tile-calc` that can be run on your system.
+
+2. Locate the executable, which will be found in `zig-out/bin/` and will be called `av1-tile-calc`
+
+The executable file called `av1-tile-calc` can then be run on your system.
 
 ## License & Contributions
 
