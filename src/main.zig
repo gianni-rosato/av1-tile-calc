@@ -13,18 +13,15 @@ pub fn main() !void {
     const args = try std.process.argsAlloc(allocator);
     defer std.process.argsFree(allocator, args);
 
-    // hel is true if the user provides `-h` as their first cli argument
-    const hel: bool = std.mem.eql(u8, args[1], "-h");
-
-    // too many args
-    if (args.len > 5) {
-        print("Please provide at most 4 arguments.\n", .{});
+    if (args.len == 1) { // if the user provided no args ...
+        print("Please provide at least 4 arguments.\n", .{});
         print("Run `av1-tile-calc -h` for more info.\n", .{});
         return;
     }
+
     // too few args
     if (args.len < 5) {
-        if (hel) { // if the user provided `-h` ...
+        if (std.mem.eql(u8, args[1], "-h")) { // if the user provided `-h` ...
             _ = help(); // run the help function to print the help menu
             return;
         } else {
@@ -32,6 +29,13 @@ pub fn main() !void {
             print("Run `av1-tile-calc -h` for more info.\n", .{});
             return;
         }
+    }
+
+    // too many args
+    if (args.len > 5) {
+        print("Please provide at most 4 arguments.\n", .{});
+        print("Run `av1-tile-calc -h` for more info.\n", .{});
+        return;
     }
 
     // user-provided bitrate range. maps to lowest, low, medium/high
