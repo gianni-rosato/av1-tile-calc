@@ -19,16 +19,28 @@ pub fn main() !void {
         return;
     }
 
-    // too few args
-    if (args.len < 5) {
-        if (std.mem.eql(u8, args[1], "-h")) { // if the user provided `-h` ...
-            _ = help(); // run the help function to print the help menu
-            return;
-        } else {
-            print("Please provide at least 4 arguments.\n", .{});
+    if (std.mem.eql(u8, args[1], "-h")) { // if the user provided `-h` ...
+        _ = help(); // run the help function to print the help menu
+        return;
+    }
+
+    // check if the user provided a negative integer
+    var isNeg: i16 = undefined;
+    for (args[1..]) |arg| { // for every argument ...
+        isNeg = try std.fmt.parseInt(i16, arg, 10); // parse each argument as an i16
+        // if the argument is less than 0 (it is negative) ...
+        if (isNeg < 0) {
+            print("Please provide positive integers.\n", .{});
             print("Run `av1-tile-calc -h` for more info.\n", .{});
             return;
         }
+    }
+
+    // too few args
+    if (args.len < 5) {
+        print("Please provide at least 4 arguments.\n", .{});
+        print("Run `av1-tile-calc -h` for more info.\n", .{});
+        return;
     }
 
     // too many args
